@@ -81,11 +81,11 @@ h1 {
 
 // *******************************
 
-const length = 0.4;
+const length = 0.2;
 const duration = length / 8;
 
-const root = 'D';
-const octave = 3;
+const root = 'B';
+const octave = 1;
 const majorMinor = 'major';
 
 // *******************************
@@ -131,12 +131,12 @@ const noteOnEvents = new Tone.Part((time, event) => {
 
     setTimeout(() => {
         numEl.innerHTML += piNums[currentNote++];
-        if (currentNote % 10 === 0) {
+        if ((currentNote - 1) % 10 === 0) {
             numEl.innerHTML += '&nbsp;';
         }
 
-        if (currentNote % 40 === 0) {
-            numEl.innerHTML += '<br>';
+        if ((currentNote - 1) % 40 === 0 && currentNote !== 1) {
+            numEl.innerHTML += '<br>&nbsp;&nbsp;';
         }
     }, (0.25 * length * 1000));
 
