@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pi-ano</title>
+	<script type="text/javascript" src="https://unpkg.com/@tonejs/midi"></script>
+	<script type="text/javascript" src="https://unpkg.com/tone@14.1.20"></script>
+	<script type="text/javascript" src="Piano.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@tonaljs/tonal/browser/tonal.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+</head>
+<body>
+
+<style type="text/css">
+
+body {
+	width: 100%;
+	height: auto;
+	max-width: 960px;
+	margin: auto;
+	margin-top: 80px;
+	font-family: monospace;
+	font-size: 2em;
+}
+
+#container {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+#number {
+	width: 620px;
+}
+
+#loading {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+button {
+	border: 1px solid black;
+	display: block;
+	position: relative;
+	text-align: center;
+	width: 160px;
+	height: 50px;
+	pointer-events: none;
+	opacity: 0.5;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: white;
+}
+
+button:hover {
+	background-color: #f0f;
+}
+
+button.active {
+	pointer-events: initial;
+	opacity: 1;
+}
+
+h1 {
+	text-align: center;
+}
+</style>
+
+<h1>Pi-ano</h1>
+<button>PLAY</button>
+<p>
+<div id="container">
+   <div id="number"></div>
+</div>
+</p>
+<div id='loading'>
+   loading...
+</div>
+
+<script>
+
+// *******************************
+
+const length = 0.4;
+const duration = length / 8;
+
+const root = 'D';
+const octave = 3;
+const majorMinor = 'major';
+
+// *******************************
+
+const piano = new Piano({
+    samples: 'https://tambien.github.io/Piano/audio/',
+    release: true,
+    pedal: true,
+    velocities: 5,
+}).toDestination()
+const loadPiano = piano.load()
+
+const scale1 = root + octave + ' ' + majorMinor;
+const scale2 = root + (octave + 1) + ' ' + majorMinor;
+const scaleNotes = Tonal.Scale.get(scale1).notes
+    .concat(Tonal.Scale.get(scale2).notes)
+    .splice(0, 10);
+const piNums = ('' + getPiDigits()).split(''); // [3, 1, 4, 1, 5, 9, 2, 6, ...];
+const piNotes = piNums.map(i => scaleNotes[i]);
+
+const notes = piNotes.map((note, i) =>
+    ({
+        name: note,
+        velocity: 1,
+        time: 1 + length * i,
+        duration: duration
+    }));
+
+let currentNote = 0;
+const numEl = document.querySelector('#number');
+
+const noteOffEvents = new Tone.Part((time, event) => {
+    piano.keyUp(event.note, time)
+}, notes.map(n => {
+    return {
+        note: n.name,
+        time: n.time + n.duration,
+    }
+})).start(0)
+
+const noteOnEvents = new Tone.Part((time, event) => {
+    piano.keyDown(event.note, time, event.velocity)
+
+    setTimeout(() => {
+        numEl.innerHTML += piNums[currentNote++];
+        if (currentNote % 10 === 0) {
+            numEl.innerHTML += '&nbsp;';
+        }
+
+        if (currentNote % 40 === 0) {
+            numEl.innerHTML += '<br>';
+        }
+    }, (0.25 * length * 1000));
+
+}, notes.map(n => {
+    return {
+        note: n.name,
+        velocity: n.velocity,
+        duration: n.duration,
+        time: n.time,
+    }
+})).start(0)
+
+
+document.querySelector('button').addEventListener('click', (e) => {
+    currentNote = 0;
+    const started = Tone.Transport.state === "started";
+    e.target.textContent = started ? "PLAY" : "STOP"
+    if (!started) {
+        numEl.innerHTML = '';
+    }
+    Tone.Transport.toggle()
+})
+
+Promise.all([loadPiano]).then(() => {
+    document.querySelector('#loading').remove()
+    document.querySelector('button').classList.add('active')
+})
+
+
+function getPiDigits() {
+    // 10,000 digits
+    let i = 1n;
+    let x = 3n * (10n ** 10020n);
+    let pi = x;
+    while (x > 0) {
+        x = x * i / ((i + 1n) * 4n);
+        pi += x / (i + 2n);
+        i += 2n;
+    }
+    return pi / (10n ** 20n);
+}
+
+</script>
+</body>
+</html>
