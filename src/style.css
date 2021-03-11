@@ -1,0 +1,58 @@
+body {
+    width: 100%;
+    height: auto;
+    max-width: 960px;
+    margin: auto;
+    margin-top: 80px;
+    font-family: monospace;
+    font-size: 2em;
+}
+
+select, input, button {
+    font-size: 0.8em;
+    font-family: monospace;
+}
+
+#container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#number {
+    width: 620px;
+}
+
+#loading {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+button {
+    border: 3px solid black;
+    display: block;
+    position: relative;
+    text-align: center;
+    width: 160px;
+    height: 50px;
+    pointer-events: none;
+    opacity: 0.5;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+}
+
+button.active {
+    pointer-events: initial;
+    opacity: 1;
+}
+
+h1 {
+    text-align: center;
+}
