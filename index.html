@@ -1,1 +1,15 @@
-<!doctype html><html><head><title>Pi-ano</title></head><body><h1>Pi-ano</h1><div id="controls"><div class="form-row"><button>PLAY</button></div><div class="form-row"><label for="scale">scale</label> <select id="scale" name="scale"></select></div><div class="form-row"><label for="bpm">bpm</label> <input id="bpm" name="bpm" type="range" min="1" max="1200" value="120" step="1"> <input id="bpm-number" name="bpm-number" type="number" min="1" max="1200" value="120" step="1"></div><div class="form-row"><label for="tonic">tonic</label> <select id="tonic" name="tonic"></select></div><div class="form-row"><label for="note-duration">note duration</label> <select id="note-duration" name="note-duration"></select></div></div><p></p><div id="container"><div id="number"></div></div><p></p><div id="loading">loading...</div><script src="bundle.js"></script></body></html>
+<!doctype html><html><head>
+<title>Pi-ano</title>
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', '265465154', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+</head>
+<body><h1>Pi-ano</h1><div id="controls"><div class="form-row"><button>PLAY</button></div><div class="form-row"><label for="scale">scale</label> <select id="scale" name="scale"></select></div><div class="form-row"><label for="bpm">bpm</label> <input id="bpm" name="bpm" type="range" min="1" max="1200" value="120" step="1"> <input id="bpm-number" name="bpm-number" type="number" min="1" max="1200" value="120" step="1"></div><div class="form-row"><label for="tonic">tonic</label> <select id="tonic" name="tonic"></select></div><div class="form-row"><label for="note-duration">note duration</label> <select id="note-duration" name="note-duration"></select></div></div><p></p><div id="container"><div id="number"></div></div><p></p><div id="loading">loading...</div><script src="bundle.js"></script></body></html>
