@@ -1,7 +1,7 @@
 import './style.css';
 
 import { Piano } from '@tonejs/piano';
-import { Scale, Note } from '@tonaljs/tonal';
+import { Scale, ScaleType, Note } from '@tonaljs/tonal';
 import * as Tone from 'tone';
 import './register-sw';
 
@@ -20,7 +20,6 @@ const genNotesForOctave = (octave) => chromaticScaleLetters.map(l => {
     return letter + (accidental||'') + octave;
 });
 const allPianoNotes = [ 'A0', 'A0#', 'B0', ...octaves.map(o => genNotesForOctave(o)).flat(), 'C7' ];
-console.log(allPianoNotes);
 const noteDurations = [
     {name: 'sixteenth (1/16)', duration: 1/16},
     {name: 'eighth (1/8)', duration: 1/8},
@@ -34,7 +33,6 @@ let currentNote = 0;
 let notes = [];
 let toneParts = [];
 const piDigitArray = ('' + getPiDigits10k()).split(''); // [3, 1, 4, 1, 5, 9, 2, 6, ...];
-console.log('piDigitArray', piDigitArray);
 const piano = new Piano({
     url: 'audio',
     release: true,
@@ -70,14 +68,22 @@ noteDurationRange.addEventListener('input', () => {
     noteDurationLabel.innerText = noteDurations[noteDurationRange.value].name;
 });
 
-getScales().forEach(scaleName => {
-    const scaleOption = document.createElement('option');
-    scaleOption.innerText = scaleName;
-    scaleOption.value = scaleName;
-    if (scaleName === 'major') {
-        scaleOption.selected = true;
-    }
-    scaleSelect.appendChild(scaleOption);
+getScalesByLength().forEach(([length, scales]) => {
+    const scaleOptionGroup = document.createElement('optgroup');
+    scaleOptionGroup.label = `${length} note scales`;
+    scales
+        .sort((s1, s2) => s1.localeCompare(s2))
+        .forEach(scaleName => {
+            const scaleOption = document.createElement('option');
+            scaleOption.innerText = scaleName;
+            scaleOption.value = scaleName;
+            if (scaleName === 'major') {
+                scaleOption.selected = true;
+            }
+            scaleOptionGroup.appendChild(scaleOption);
+        });
+
+    scaleSelect.appendChild(scaleOptionGroup);
 });
 
 const build = () => {
@@ -183,8 +189,17 @@ function updateDigitDisplay() {
     }
 }
 
-function getScales() {
-    return Scale.names();
+function getScalesByLength() {
+    const scales = new Map();
+
+    ScaleType.all().forEach(scale => {
+       if (! scales.has(scale.intervals.length)) {
+           scales.set(scale.intervals.length, []);
+       }
+       scales.get(scale.intervals.length).push(scale.name);
+    });
+
+    return Array.from(scales.entries());
 }
 
 function getNotes(options, start, end) {

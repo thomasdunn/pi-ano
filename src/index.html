@@ -4,28 +4,31 @@
 	<title>Pi-ano</title>
 </head>
 <body>
-<h1>Pi-ano</h1>
-<button>PLAY</button>
-<div>
-	<label for="scale">scale</label>
-	<select id="scale" name="scale"></select>
-</div>
-<div>
-	<label for="bpm">bpm</label>
-	<input id="bpm" name="bpm" type="range" min="1" max="1200" value="120" step="1">
-	<input id="bpm-number" name="bpm-number" type="number" min="1" max="1200" value="120" step="1">
-</div>
-<div>
-	<label for="tonic">tonic</label>
-	<input id="tonic" name="tonic" type="range" min="0" max="75" value="39" step="1">
-	<span id="tonic-label">C4</span>
-</div>
-<div>
-	<label for="note-duration">note duration</label>
-	<input id="note-duration" name="note-duration" type="range" min="0" max="5" value="2" step="1">
-	<span id="note-duration-label">quarter</span>
-</div>
 
+<h1>Pi-ano</h1>
+
+<div id="controls">
+	<button>PLAY</button>
+	<div>
+		<label for="scale">scale</label>
+		<select id="scale" name="scale"></select>
+	</div>
+	<div>
+		<label for="bpm">bpm</label>
+		<input id="bpm" name="bpm" type="range" min="1" max="1200" value="120" step="1">
+		<input id="bpm-number" name="bpm-number" type="number" min="1" max="1200" value="120" step="1">
+	</div>
+	<div>
+		<label for="tonic">tonic</label>
+		<input id="tonic" name="tonic" type="range" min="0" max="75" value="39" step="1">
+		<span id="tonic-label">C4</span>
+	</div>
+	<div>
+		<label for="note-duration">note duration</label>
+		<input id="note-duration" name="note-duration" type="range" min="0" max="5" value="2" step="1">
+		<span id="note-duration-label">quarter</span>
+	</div>
+</div>
 
 <p>
 <div id="container">
