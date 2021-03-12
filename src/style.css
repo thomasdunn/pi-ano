@@ -8,19 +8,34 @@ body {
     font-size: 2em;
 }
 
-select, input, button {
-    font-size: 0.8em;
-    font-family: monospace;
+#controls {
+    margin-left: 10vw;
+    margin-right: 10vw;
 }
 
-#controls {
+.form-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: .5em;
+    height: 2.3em;
+}
 
+.form-row > label {
+    padding: .5em 1em .5em 0;
+    flex: 1;
+}
+.form-row > input, select {
+    flex: 2;
+    padding: .5em;
+    font-size: 1em;
+    font-family: monospace;
 }
 
 #container {
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-top: 2em;
 }
 
 #number {
@@ -39,13 +54,14 @@ button {
     display: block;
     position: relative;
     text-align: center;
-    width: 160px;
-    height: 50px;
+    width: 30vw;
     pointer-events: none;
     opacity: 0.5;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
+    font-family: monospace;
+    font-size: 1em;
 }
 
 button:hover {
