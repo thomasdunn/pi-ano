@@ -1,0 +1,11 @@
+<!doctype html><html><head><title>Pi-ano</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3L4ZPXKMRL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-3L4ZPXKMRL');
+    </script>
+</head><body><h1>Pi-ano</h1><div id="controls"><div class="form-row"><button>PLAY</button></div><div class="form-row"><label for="scale">scale</label> <select id="scale" name="scale"></select></div><div class="form-row"><label for="bpm">bpm</label> <input id="bpm" name="bpm" type="range" min="1" max="1200" value="120" step="1"> <input id="bpm-number" name="bpm-number" type="number" min="1" max="1200" value="120" step="1"></div><div class="form-row"><label for="tonic">tonic</label> <select id="tonic" name="tonic"></select></div><div class="form-row"><label for="note-duration">note duration</label> <select id="note-duration" name="note-duration"></select></div></div><p></p><div id="container"><div id="number"></div></div><p></p><div id="loading">loading...</div><script src="bundle.js"></script></body></html>
